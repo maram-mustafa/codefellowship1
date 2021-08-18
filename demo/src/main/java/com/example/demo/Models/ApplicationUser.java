@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // first step : to have an entity for application user that extends the userDetails interface
 
@@ -25,6 +27,20 @@ public class ApplicationUser implements UserDetails {
     private String bio ;
     @OneToMany(mappedBy = "applicationUser")
     private List<Post> post;
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "followersfollowingtable",
+            joinColumns = {@JoinColumn(name="followerid")},
+            inverseJoinColumns = {@JoinColumn(name="followingid")})
+    private Set <ApplicationUser> followers = new HashSet<>();
+
+    @ManyToMany(mappedBy = "followers")
+    private Set <ApplicationUser> following = new HashSet<>();
+
+
+
 
 
     //default constructor
@@ -131,5 +147,24 @@ public class ApplicationUser implements UserDetails {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    /////////////////////////////////////
+
+
+    public Set<ApplicationUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<ApplicationUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<ApplicationUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<ApplicationUser> following) {
+        this.following = following;
     }
 }

@@ -6,38 +6,33 @@
 </head>
 <body>
 
-<!--<img src="/img/profilepic.png" alt="profile picture" class="profile-img">-->
-<!--<div class="user-info-container">-->
 <!--    <h2>User Name</h2>-->
-<!--    <p th:text="${allUserInfo.username}"></p>-->
+<!--    <p th:text="${allUserData.username}"></p>-->
 <!--    <h2>Full Name</h2>-->
-<!--    <p th:text="${allUserInfo.firstName} + ' '+${allUserInfo.lastName}"></p>-->
+<!--    <p th:text="${allUserData.firstname }"></p>-->
 <!--    <h2>Date of birth</h2>-->
-<!--    <p th:text="${allUserInfo.dateOfBirth}"></p>-->
+<!--    <p th:text="${allUserData.dateOfBirth}"></p>-->
 <!--    <h2>bio</h2>-->
-<!--    <p th:text="${allUserInfo.bio}"></p>-->
-<!--</div>-->
+<!--    <p th:text="${allUserData.bio}"></p>-->
 
-<form action="/myprofile" method="post">
+
+<form action="/userprofile" method="post">
     <h1>Add a post</h1>
     <input type="text" name="body" id="body"/> <br/>
     <button type="submit">post</button>
 </form>
 
-<!--<div>-->
-<!--    <h1>User posts</h1>-->
-<!--    <p th:each="post:${allUserInfo.posts}"></p>-->
-<!--            <h5 th:text="${ post.id}"></h5>-->
-<!--            <h6 th:text="${post.createdAt}"></h6>-->
-<!--            <p  th:text="${post.body}"></p>-->
-<!--        </div>-->
 
-<h1> Results</h1>
-<p th:each="post : ${post}"></p>
-    <h5>id= <span th:text=${post.id}></span></h5>
-    <h5>createdat = <span th:text=${post.createdAt}></span></h5>
-    <h5>body = <span th:text=${post.body}></span></h5>
-    <hr>
+<div>
+    <h3>User Post</h3>
+    <div  th:each="post:${allUserData.post}">
+        <div >
+            <h5  th:text="${'post' + post.id}"></h5>
+            <h6  th:text="${post.createdAt}"></h6>
+            <p  th:text="${post.body}"></p>
+        </div>
+    </div>
+</div>
 
 
 

@@ -6,15 +6,18 @@
 </head>
 <body>
 
-<form method="POST" action="perform_login">
-    <label for="username">User name</label>
-    <input id="username" name="username" type="text">
 
+<form action="/perform_login" method="post" >
+    <label for="username">User Name</label>
+    <input id="username" name="username" type="text"/>
+    <br/>
     <label for="password">Password</label>
-    <input id="password" name="password" type="password">
+    <input id="password" name="password" type="password"/>
+    <br/>
 
-    <button type="submit">log in</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
+
 
 </body>
 </html>
