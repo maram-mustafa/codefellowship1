@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="post.css">
+
 </head>
 <body>
 
-<!--    <h2>User Name</h2>-->
-<!--    <p th:text="${allUserData.username}"></p>-->
-<!--    <h2>Full Name</h2>-->
-<!--    <p th:text="${allUserData.firstname }"></p>-->
-<!--    <h2>Date of birth</h2>-->
-<!--    <p th:text="${allUserData.dateOfBirth}"></p>-->
-<!--    <h2>bio</h2>-->
-<!--    <p th:text="${allUserData.bio}"></p>-->
+<div>
+    <h1>User Profile</h1>
+    <h2>Name</h2>
+    <p th:text="${allUserData.username}"></p>
+    <h2>Date of birth</h2>
+    <p th:text="${allUserData.dateOfBirth}"></p>
+    <h2>bio</h2>
+    <p th:text="${allUserData.bio}"></p>
+</div>
+
+
+<a href="/allUsers"> See All Users </a>
 
 
 <form action="/userprofile" method="post">
-    <h1>Add a post</h1>
+
+    <h1>Add a posts</h1>
     <input type="text" name="body" id="body"/> <br/>
     <button type="submit">post</button>
 </form>
 
 
 <div>
-    <h3>User Post</h3>
+    <h3>User Posts</h3>
     <div  th:each="post:${allUserData.post}">
         <div >
             <h5  th:text="${'post' + post.id}"></h5>

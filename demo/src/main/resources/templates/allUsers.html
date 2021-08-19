@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="allUsers.css">
+
 </head>
 <body>
 
-<div  th:each="user:${alluser}">
-    <div >
-        <h5  th:text="${user.firstname + ' ' + user.lastname}"></h5>
-        <h6  th:text="${user.username}"></h6>
-        <p  th:text="${user.bio}"></p>
+<div >
+    <h1> All Users</h1>
+    <div  style="width: 18rem;" th:each="user:${Allusers}">
+        <div >
+            <h6  th:text="${user.username}"></h6>
+            <p  th:text="${user.bio}"></p>
+        </div>
+        <form method="post" th:action="@{'/follow?id='+${user.id}}">
+
+            <button th:if="${whoIFollow.contains(user) != true and userInfo != user.username}" type="submit">Follow</button>
+        </form>
+
     </div>
+    <a href="/feed"> See All Feed </a>
 
-    <form method="post" th:action="@{'/follow?id='+${user.id}}">
-
-        <button class="btn btn-primary" th:if="${whoIFollow.contains(user) != true }" type="submit">Follow</button>
-    </form>
 </div>
 
-
-<!--    <div  th:each="user:${Allusers}">-->
-<!--            <h5  th:text="${user.firstname}"></h5>-->
-<!--            <h6  th:text="${user.username}"></h6>-->
-<!--            <p  th:text="${user.bio}"></p>-->
-<!--        </div>-->
-<!--        <form method="post" action="/follow?id='+${user.id}">-->
-<!--            <button th:if="${whoIFollow.contains(user) != true and userData != user.username}" type="submit">Follow</button>-->
-<!--        </form>-->
 
 </body>
 </html>

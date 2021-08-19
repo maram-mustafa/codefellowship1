@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Controller
 public class PostsControllers {
@@ -35,7 +36,6 @@ public class PostsControllers {
         return "user.html";
     }
 
-
     @PostMapping("/userprofile")
     public RedirectView addNewPost(Principal p , @RequestParam String body){
         Post post = new Post(body , applicationUserRepository.findByUsername(p.getName()));
@@ -43,50 +43,45 @@ public class PostsControllers {
         return new RedirectView("/userprofile");
     }
 
-    @GetMapping("/allusers")
-    public  String getAllUser(Principal p,Model m){
-        try {
 
-            m.addAttribute("alluser",applicationUserRepository.findAll());
+    @GetMapping("/allUsers")
+    public String getAllUsers(Principal p,Model model){
+        try{
+            model.addAttribute("userData",p.getName());
+            model.addAttribute("Allusers",applicationUserRepository.findAll());
 
             ApplicationUser me = applicationUserRepository.findByUsername(p.getName());
-
-            m.addAttribute("whoIFollow",me.getFollowers());
-
-
+            model.addAttribute("whoIFollow",me.getFollowers());
         }catch (NullPointerException e){
-
+            model.addAttribute("userData","");
         }
         return "allUsers.html";
     }
-//
-//    @GetMapping("/allUsers")
-//    public String getAllUsers(Principal p,Model model){
-//        try{
-//            model.addAttribute("userData",p.getName());
-//            model.addAttribute("Allusers",applicationUserRepository.findAll());
-//
-//            ApplicationUser me = applicationUserRepository.findByUsername(p.getName());
-//            model.addAttribute("whoIFollow",me.getFollowers());
-//        }catch (NullPointerException e){
-//            model.addAttribute("userData","");
-//        }
-//        return "allUsers.html";
-//    }
 
-//
-//    @PostMapping("/follow")
-//    public RedirectView addFollow(Principal p,@RequestParam int id){
-//        ApplicationUser me = applicationUserRepository.findByUsername(p.getName());
-//        ApplicationUser toFollow = applicationUserRepository.findById(id).get();
-//        me.getFollowers().add(toFollow);
-//
-//        applicationUserRepository.save(me);
-//        return new RedirectView("/feed");
-//    }
 
-    
+    @PostMapping("/follow")
+    public RedirectView addFollow(Principal p,@RequestParam int id){
+        ApplicationUser me = applicationUserRepository.findByUsername(p.getName());
+        ApplicationUser toFollow = applicationUserRepository.findById(id).get();
+        me.getFollowers().add(toFollow);
 
+        applicationUserRepository.save(me);
+        return new RedirectView("/feed");
+    }
+
+
+    @GetMapping("/feed")
+    public String getFollowingInfo(Principal p, Model model){
+        try{
+            model.addAttribute("userData",p.getName());
+            ApplicationUser me = applicationUserRepository.findByUsername(p.getName());
+            Set<ApplicationUser> whoIFollow = me.getFollowers();
+            model.addAttribute("Allfollowing",whoIFollow);
+        }catch (NullPointerException e){
+            model.addAttribute("userData","");
+        }
+        return "feed.html";
+    }
 
 
 }
